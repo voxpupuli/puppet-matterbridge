@@ -52,16 +52,13 @@ class matterbridge (
   After=network-online.target
 
   [Service]
-  Type=notify
   ExecStart=/usr/local/bin/matterbridge -debug -conf ${home}/matterbridge.toml
   TimeoutStartSec=3600
-  #Restart=always
-  RestartSec=10
+  Restart=on-failure
+  RestartSec=5s
   WorkingDirectory=${home}
   User=matterbridge
   Group=matterbridge
-  Restart=on-failure
-  RestartSec=5s
   Type=simple
   CapabilityBoundingSet=
   AmbientCapabilities=
@@ -84,8 +81,8 @@ class matterbridge (
   LockPersonality=true
   RestrictRealtime=true
   RestrictSUIDSGID=true
-  SystemCallFilter=@system-service
-  SystemCallArchitectures=native
+  #SystemCallFilter=@system-service
+  #SystemCallArchitectures=native
 
   [Install]
   WantedBy=multi-user.target
