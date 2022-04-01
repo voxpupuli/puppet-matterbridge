@@ -32,4 +32,69 @@ class matterbridge (
       system => true,
     }
   }
+  file { "${home}/matterbridge-${version}-linux-64bit":
+    source => "https://github.com/42wim/matterbridge/releases/download/v${version}/matterbridge-${version}-linux-64bit",
+    owner  => $user,
+    group  => $group,
+    mode   => '0770',
+  }
+  file { '/usr/local/bin/matterbridge':
+    ensure => 'link',
+    target => "/opt/matterbridge/matterbridge-${version}-linux-64bit",
+    notify => Service['matterbridge.service'],
+  }
+
+  # lint:ignore:strict_indent
+  $unit = @("UNIT"/L)
+  # THIS FILE IS MAINTAINED BY PUPPET
+  [Unit]
+  Description=Matterbridge Server
+  After=network-online.target
+
+  [Service]
+  Type=notify
+  ExecStart=/usr/local/bin/matterbridge -debug -conf ${home}/matterbridge.toml
+  TimeoutStartSec=3600
+  #Restart=always
+  RestartSec=10
+  WorkingDirectory=${home}
+  User=matterbridge
+  Group=matterbridge
+  Restart=on-failure
+  RestartSec=5s
+  Type=simple
+  CapabilityBoundingSet=
+  AmbientCapabilities=
+  NoNewPrivileges=true
+  #SecureBits=
+  ProtectSystem=strict
+  ProtectHome=true
+  PrivateTmp=true
+  PrivateDevices=true
+  PrivateNetwork=false
+  PrivateUsers=true
+  ProtectHostname=true
+  ProtectClock=true
+  ProtectKernelTunables=true
+  ProtectKernelModules=true
+  ProtectKernelLogs=true
+  ProtectControlGroups=true
+  RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+  RestrictNamespaces=true
+  LockPersonality=true
+  RestrictRealtime=true
+  RestrictSUIDSGID=true
+  SystemCallFilter=@system-service
+  SystemCallArchitectures=native
+
+  [Install]
+  WantedBy=multi-user.target
+  | UNIT
+  # lint:endignore:strict_indent
+
+  systemd::unit_file { 'matterbridge.service':
+    active  => true,
+    enable  => true,
+    content => $unit,
+  }
 }
