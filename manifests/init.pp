@@ -5,6 +5,12 @@
 # @param group group that owns the files and runs the service
 # @param manage_user boolean to enable/disable the user+group creation
 # @param home home dir for the user
+# @param version the desired matterbridge version you want to have
+#
+# @see https://github.com/42wim/matterbridge
+#
+# @author Tim Meusel <tim@bastelfreak.de>
+#
 class matterbridge (
   String[1] $user = 'matterbridge',
   String[1] $group = $user,
