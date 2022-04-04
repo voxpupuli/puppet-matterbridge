@@ -16,6 +16,7 @@ describe 'matterbridge' do
         it { is_expected.to contain_group('matterbridge') }
         it { is_expected.to contain_file('/usr/local/bin/matterbridge').with_ensure('link') }
         it { is_expected.to contain_file('/opt/matterbridge/matterbridge-1.24.1-linux-64bit') }
+        it { is_expected.to contain_file('/opt/matterbridge/matterbridge.toml') }
       end
     end
   end
