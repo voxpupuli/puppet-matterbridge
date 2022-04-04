@@ -6,6 +6,7 @@
 # @param manage_user boolean to enable/disable the user+group creation
 # @param home home dir for the user
 # @param version the desired matterbridge version you want to have
+# @param config the configuration hash for matterbridge, will be converted to toml
 #
 # @see https://github.com/42wim/matterbridge
 #
@@ -17,6 +18,7 @@ class matterbridge (
   Boolean $manage_user = true,
   String[1] $version = '1.24.1',
   Stdlib::Absolutepath $home = '/opt/matterbridge',
+  Hash $config = {},
 ) {
   if $manage_user {
     user { $user:
@@ -43,6 +45,14 @@ class matterbridge (
     target => "/opt/matterbridge/matterbridge-${version}-linux-64bit",
     notify => Service['matterbridge.service'],
   }
+  file { "${home}/matterbridge.toml":
+    ensure  => 'file',
+    content => $config.to_toml,
+    owner   => $user,
+    group   => $group,
+    mode    => '0400',
+    notify  => Service['matterbridge.service'],
+  }
 
   # lint:ignore:strict_indent
   $unit = @("UNIT"/L)
@@ -52,16 +62,13 @@ class matterbridge (
   After=network-online.target
 
   [Service]
-  Type=notify
   ExecStart=/usr/local/bin/matterbridge -debug -conf ${home}/matterbridge.toml
   TimeoutStartSec=3600
-  #Restart=always
-  RestartSec=10
+  Restart=on-failure
+  RestartSec=5s
   WorkingDirectory=${home}
   User=matterbridge
   Group=matterbridge
-  Restart=on-failure
-  RestartSec=5s
   Type=simple
   CapabilityBoundingSet=
   AmbientCapabilities=
@@ -84,8 +91,8 @@ class matterbridge (
   LockPersonality=true
   RestrictRealtime=true
   RestrictSUIDSGID=true
-  SystemCallFilter=@system-service
-  SystemCallArchitectures=native
+  #SystemCallFilter=@system-service
+  #SystemCallArchitectures=native
 
   [Install]
   WantedBy=multi-user.target

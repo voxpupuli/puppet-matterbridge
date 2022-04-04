@@ -26,6 +26,7 @@ The following parameters are available in the `matterbridge` class:
 * [`manage_user`](#manage_user)
 * [`home`](#home)
 * [`version`](#version)
+* [`config`](#config)
 
 ##### <a name="user"></a>`user`
 
@@ -66,4 +67,12 @@ Data type: `String[1]`
 the desired matterbridge version you want to have
 
 Default value: `'1.24.1'`
+
+##### <a name="config"></a>`config`
+
+Data type: `Hash`
+
+the configuration hash for matterbridge, will be converted to toml
+
+Default value: `{}`
 
