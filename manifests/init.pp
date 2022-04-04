@@ -91,8 +91,8 @@ class matterbridge (
   LockPersonality=true
   RestrictRealtime=true
   RestrictSUIDSGID=true
-  #SystemCallFilter=@system-service
-  #SystemCallArchitectures=native
+  SystemCallFilter=@system-service
+  SystemCallArchitectures=native
 
   [Install]
   WantedBy=multi-user.target
