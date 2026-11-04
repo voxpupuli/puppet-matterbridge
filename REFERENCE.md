@@ -21,14 +21,14 @@ manages the matterbridge bridge
 
 The following parameters are available in the `matterbridge` class:
 
-* [`user`](#user)
-* [`group`](#group)
-* [`manage_user`](#manage_user)
-* [`home`](#home)
-* [`version`](#version)
-* [`config`](#config)
+* [`user`](#-matterbridge--user)
+* [`group`](#-matterbridge--group)
+* [`manage_user`](#-matterbridge--manage_user)
+* [`home`](#-matterbridge--home)
+* [`version`](#-matterbridge--version)
+* [`config`](#-matterbridge--config)
 
-##### <a name="user"></a>`user`
+##### <a name="-matterbridge--user"></a>`user`
 
 Data type: `String[1]`
 
@@ -36,7 +36,7 @@ username that owns the files and runs the service
 
 Default value: `'matterbridge'`
 
-##### <a name="group"></a>`group`
+##### <a name="-matterbridge--group"></a>`group`
 
 Data type: `String[1]`
 
@@ -44,15 +44,15 @@ group that owns the files and runs the service
 
 Default value: `$user`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-matterbridge--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
 boolean to enable/disable the user+group creation
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="home"></a>`home`
+##### <a name="-matterbridge--home"></a>`home`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -60,7 +60,7 @@ home dir for the user
 
 Default value: `'/opt/matterbridge'`
 
-##### <a name="version"></a>`version`
+##### <a name="-matterbridge--version"></a>`version`
 
 Data type: `String[1]`
 
@@ -68,11 +68,10 @@ the desired matterbridge version you want to have
 
 Default value: `'1.24.1'`
 
-##### <a name="config"></a>`config`
+##### <a name="-matterbridge--config"></a>`config`
 
 Data type: `Hash`
 
 the configuration hash for matterbridge, will be converted to toml
 
 Default value: `{}`
-
